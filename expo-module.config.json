@@ -1,0 +1,9 @@
+{
+  "platforms": ["ios", "android", "web"],
+  "ios": {
+    "modules": ["ExpoWalletCoreModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.walletcore.ExpoWalletCoreModule"]
+  }
+}

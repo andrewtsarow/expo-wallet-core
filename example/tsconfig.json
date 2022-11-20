@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "expo-wallet-core": ["../src/index"],
+      "expo-wallet-core/*": ["../src/*"]
+    }
+  }
+}
