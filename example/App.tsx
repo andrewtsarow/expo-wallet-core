@@ -1,20 +1,33 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import * as ExpoWalletCore from 'expo-wallet-core';
+import WalletAddressesScreen from "./screens/WalletAddressesScreen";
+import WalletsListScreen from "./screens/WalletsListScreen";
+
+export type RootStackParamList = {
+  WalletsList: undefined;
+  WalletAddresses: {
+    mnemonic: string;
+  };
+};
+
+const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>{ExpoWalletCore.hello()}</Text>
-    </View>
+    <NavigationContainer>
+      <RootStack.Navigator initialRouteName="WalletsList">
+        <RootStack.Screen
+          component={WalletsListScreen}
+          name="WalletsList"
+          options={{}}
+        />
+        <RootStack.Screen
+          component={WalletAddressesScreen}
+          name="WalletAddresses"
+          options={{}}
+        />
+      </RootStack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
