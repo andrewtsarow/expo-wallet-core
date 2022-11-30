@@ -1,7 +1,7 @@
 {
   "name": "expo-wallet-core",
   "version": "0.1.0",
-  "description": "Cross-platform, cross-blockchain wallet library",
+  "description": "Provides access to cross-platform, cross-blockchain wallet library. This module wraps https://github.com/trustwallet/wallet-core.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
@@ -28,12 +28,15 @@
   "author": "Andrew Tsarow <andrew.tsarow@gmail.com> (https://github.com/andrewtsarow)",
   "license": "MIT",
   "homepage": "https://github.com/andrewtsarow/expo-wallet-core#readme",
-  "dependencies": {},
   "devDependencies": {
+    "@trustwallet/wallet-core": "3.1.0",
     "@types/react": "^18.0.25",
     "@types/react-native": "^0.70.6",
+    "eslint": "^8.28.0",
+    "eslint-config-universe": "^11.1.1",
     "expo-module-scripts": "^3.0.3",
-    "expo-modules-core": "^1.0.3"
+    "expo-modules-core": "^1.0.3",
+    "prettier": "^2.7.1"
   },
   "peerDependencies": {
     "expo": "*",

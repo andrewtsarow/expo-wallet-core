@@ -1,47 +1,59 @@
 package expo.modules.walletcore
 
+import com.google.protobuf.ByteString
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
+import wallet.core.java.AnySigner
+import wallet.core.jni.CoinType
+import wallet.core.jni.HDWallet
+import wallet.core.jni.proto.Ethereum
+import java.math.BigInteger
+
+fun ByteArray.toHexString() : String {
+  return this.joinToString("") {
+    java.lang.String.format("%02x", it)
+  }
+}
 
 class ExpoWalletCoreModule : Module() {
-  // Each module class must implement the definition function. The definition consists of components
-  // that describes the module's functionality and behavior.
-  // See https://docs.expo.dev/modules/module-api for more details about available components.
+  init {
+    System.loadLibrary("TrustWalletCore")
+  }
+
   override fun definition() = ModuleDefinition {
-    // Sets the name of the module that JavaScript code will use to refer to the module. Takes a string as an argument.
-    // Can be inferred from module's class name, but it's recommended to set it explicitly for clarity.
-    // The module will be accessible from `requireNativeModule('ExpoWalletCore')` in JavaScript.
     Name("ExpoWalletCore")
 
-    // Sets constant properties on the module. Can take a dictionary or a closure that returns a dictionary.
-    Constants(
-      "PI" to Math.PI
-    )
-
-    // Defines event names that the module can send to JavaScript.
-    Events("onChange")
-
-    // Defines a JavaScript synchronous function that runs the native code on the JavaScript thread.
-    Function("hello") {
-      "Hello world! 👋"
+    Function("create") {
+      val wallet = HDWallet(128, "")
+      mapOf(
+        "entropy" to wallet.entropy().toString(),
+        "mnemonic" to wallet.mnemonic(),
+        "seed" to wallet.seed().toString()
+      )
     }
 
-    // Defines a JavaScript function that always returns a Promise and whose native code
-    // is by default dispatched on the different thread than the JavaScript runtime runs on.
-    AsyncFunction("setValueAsync") { value: String ->
-      // Send an event to JavaScript.
-      sendEvent("onChange", mapOf(
-        "value" to value
-      ))
+    Function("createWithMnemonic") { mnemonic: String ->
+      val wallet = HDWallet(mnemonic, "")
+      mapOf(
+        "entropy" to wallet.entropy().toString(),
+        "mnemonic" to wallet.mnemonic(),
+        "seed" to wallet.seed().toString()
+      )
     }
 
-    // Enables the module to be used as a native view. Definition components that are accepted as part of
-    // the view definition: Prop, Events.
-    View(ExpoWalletCoreView::class) {
-      // Defines a setter for the `name` prop.
-      Prop("name") { view: ExpoWalletCoreView, prop: String ->
-        println(prop)
-      }
+    Function("getAddressForCoin") { mnemonic: String, coin: Int ->
+      val wallet = HDWallet(mnemonic, "")
+      wallet.getAddressForCoin(CoinType.createFromValue(coin))
+    }
+
+    Function("getKeyForCoin") { mnemonic: String, coin: Int ->
+      val wallet = HDWallet(mnemonic, "")
+      wallet.getKeyForCoin(CoinType.createFromValue(coin)).data().toHexString()
+    }
+
+    Function("sign") { data: String, coin: Int ->
+      val output = AnySigner.nativeSign(BigInteger(data, 16).toByteArray(), coin)
+      output.toHexString()
     }
   }
 }
