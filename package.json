@@ -28,8 +28,10 @@
   "author": "Andrew Tsarow <andrew.tsarow@gmail.com> (https://github.com/andrewtsarow)",
   "license": "MIT",
   "homepage": "https://github.com/andrewtsarow/expo-wallet-core#readme",
+  "dependencies": {
+    "@trustwallet/wallet-core": "3.1.0"
+  },
   "devDependencies": {
-    "@trustwallet/wallet-core": "3.1.0",
     "@types/react": "^18.0.25",
     "@types/react-native": "^0.70.6",
     "eslint": "^8.28.0",
