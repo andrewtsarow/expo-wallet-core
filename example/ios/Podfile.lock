@@ -16,7 +16,7 @@ PODS:
   - ExpoModulesCore (1.0.3):
     - React-Core
     - ReactCommon/turbomodule/core
-  - ExpoWalletCore (0.1.1):
+  - ExpoWalletCore (0.2.0):
     - ExpoModulesCore
     - TrustWalletCore (= 3.1.0)
   - FBLazyVector (0.70.5)
@@ -469,7 +469,7 @@ SPEC CHECKSUMS:
   Expo: a581e979539bae3e49cd02d9dee2432947383d3b
   ExpoKeepAwake: 69b59d0a8d2b24de9f82759c39b3821fec030318
   ExpoModulesCore: b5d21c8880afda6fb6ee95469f9ac2ec9b98e995
-  ExpoWalletCore: 41e0a421a41ed95ac0ae51233f325bcb9dc8c4e5
+  ExpoWalletCore: b74edbb3cec52f8fd67d4d3dda539dc44fcd5734
   FBLazyVector: affa4ba1bfdaac110a789192f4d452b053a86624
   FBReactNativeSpec: fe8b5f1429cfe83a8d72dc8ed61dc7704cac8745
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
