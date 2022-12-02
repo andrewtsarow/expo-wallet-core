@@ -34,7 +34,7 @@ Run `npx pod-install` after installing the npm package.
 ```typescript
 import * as WalletCore from "expo-wallet-core";
 
-const wallet = new WalletCore.Wallet();
+const wallet = await WalletCore.Wallet.build();
 
 console.log(wallet.mnemonic);
 ```
@@ -44,7 +44,7 @@ console.log(wallet.mnemonic);
 ```typescript
 import * as WalletCore from "expo-wallet-core";
 
-const wallet = new WalletCore.Wallet(
+const wallet = await WalletCore.Wallet.build(
   "ripple scissors kick mammal hire column oak again sun offer wealth tomorrow wagon turn fatal",
 );
 
@@ -56,10 +56,10 @@ console.log(wallet.mnemonic);
 ```typescript
 import * as WalletCore from "expo-wallet-core";
 
-const wallet = new WalletCore.Wallet(
+const wallet = await WalletCore.Wallet.build(
   "ripple scissors kick mammal hire column oak again sun offer wealth tomorrow wagon turn fatal",
 );
-const ethereumAddress = wallet.getAddressForCoin(WalletCore.CoinType.Ethereum);
+const ethereumAddress = await wallet.getAddressForCoin(WalletCore.CoinType.Ethereum);
 
 console.log(ethereumAddress);
 ```
@@ -69,10 +69,10 @@ console.log(ethereumAddress);
 ```typescript
 import * as WalletCore from "expo-wallet-core";
 
-const wallet = new WalletCore.Wallet(
+const wallet = await WalletCore.Wallet.build(
   "ripple scissors kick mammal hire column oak again sun offer wealth tomorrow wagon turn fatal",
 );
-const ethereumKey = wallet.getKeyForCoin(WalletCore.CoinType.Ethereum);
+const ethereumKey = await wallet.getKeyForCoin(WalletCore.CoinType.Ethereum);
 
 console.log(ethereumKey);
 ```
@@ -82,7 +82,7 @@ console.log(ethereumKey);
 ```typescript
 import * as WalletCore from "expo-wallet-core";
 
-const wallet = new WalletCore.Wallet(
+const wallet = await WalletCore.Wallet.build(
   "ripple scissors kick mammal hire column oak again sun offer wealth tomorrow wagon turn fatal",
 );
 const signingInput = WalletCore.TW.Ethereum.Proto.SigningInput.encode({
@@ -99,7 +99,8 @@ const signingInput = WalletCore.TW.Ethereum.Proto.SigningInput.encode({
     }),
   }),
 });
-const signingOutputRaw = new WalletCore.AnySigner().sign(
+const signer = await WalletCore.AnySigner().build()
+const signingOutputRaw = await signer.sign(
   WalletCore.Utils.buf2hex(signingInput.finish()),
   WalletCore.CoinType.Ethereum,
 );

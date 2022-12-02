@@ -1,5 +1,6 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as WalletCore from "expo-wallet-core";
+import { useEffect, useState } from "react";
 import {
   Alert,
   Clipboard,
@@ -16,14 +17,24 @@ const { CoinType, Wallet } = WalletCore;
 
 function WalletAddressesScreen() {
   const route = useRoute<RouteProp<RootStackParamList, "WalletAddresses">>();
+  const [addresses, setAddresses] = useState<
+    { address: string; chain: string }[]
+  >([]);
 
-  const wallet = new Wallet(route.params.mnemonic);
-  const addresses = (Object.keys(CoinType) as (keyof typeof CoinType)[])
-    .filter((key) => Number.isNaN(Number(key)))
-    .map((key) => ({
-      address: wallet.getAddressForCoin(CoinType[key]),
-      chain: key,
-    }));
+  useEffect(() => {
+    (async () => {
+      const wallet = await Wallet.build(route.params.mnemonic);
+      const addresses = await Promise.all(
+        (Object.keys(CoinType) as (keyof typeof CoinType)[])
+          .filter((key) => Number.isNaN(Number(key)))
+          .map(async (key) => ({
+            address: await wallet.getAddressForCoin(CoinType[key]),
+            chain: key,
+          }))
+      );
+      setAddresses(addresses);
+    })();
+  }, []);
 
   const copy = (address: string) => {
     Alert.alert("Copied to clipboard", address);

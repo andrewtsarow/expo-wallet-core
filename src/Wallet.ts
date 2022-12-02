@@ -11,18 +11,24 @@ class Wallet {
   public mnemonic: string;
   public seed: string;
 
-  constructor(mnemonic?: string) {
-    const wallet = mnemonic ? createWithMnemonic(mnemonic) : create();
-    this.entropy = wallet.entropy;
-    this.mnemonic = wallet.mnemonic;
-    this.seed = wallet.seed;
+  constructor(entropy: string, mnemonic: string, seed: string) {
+    this.entropy = entropy;
+    this.mnemonic = mnemonic;
+    this.seed = seed;
   }
 
-  public getAddressForCoin(coin: CoinType): string {
+  static async build(mnemonic?: string) {
+    const wallet = mnemonic
+      ? await createWithMnemonic(mnemonic)
+      : await create();
+    return new Wallet(wallet.entropy, wallet.mnemonic, wallet.seed);
+  }
+
+  public async getAddressForCoin(coin: CoinType): Promise<string> {
     return getAddressForCoin(this.mnemonic, coin);
   }
 
-  public getKeyForCoin(coin: CoinType): string {
+  public async getKeyForCoin(coin: CoinType): Promise<string> {
     return getKeyForCoin(this.mnemonic, coin);
   }
 }

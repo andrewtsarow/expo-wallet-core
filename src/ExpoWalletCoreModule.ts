@@ -6,25 +6,35 @@ import { CoinType } from "./ExpoWalletCore.types";
 // the bridge module (from NativeModulesProxy) if the remote debugger is on.
 const ExpoWalletCoreModule = requireNativeModule("ExpoWalletCore");
 
-// eslint-disable-next-line prettier/prettier
-export const create = (): { entropy: string, mnemonic: string, seed: string } => {
+export const create = async (): Promise<{
+  entropy: string;
+  mnemonic: string;
+  seed: string;
+}> => {
   return ExpoWalletCoreModule.create();
 };
 
-// eslint-disable-next-line prettier/prettier
-export const createWithMnemonic = (mnemonic: string): { entropy: string, mnemonic: string, seed: string } => {
+export const createWithMnemonic = async (
+  mnemonic: string
+): Promise<{ entropy: string; mnemonic: string; seed: string }> => {
   return ExpoWalletCoreModule.createWithMnemonic(mnemonic);
 };
 
-export const getAddressForCoin = (mnemonic: string, coin: CoinType): string => {
+export const getAddressForCoin = async (
+  mnemonic: string,
+  coin: CoinType
+): Promise<string> => {
   return ExpoWalletCoreModule.getAddressForCoin(mnemonic, coin);
 };
 
-export const getKeyForCoin = (mnemonic: string, coin: CoinType): string => {
+export const getKeyForCoin = async (
+  mnemonic: string,
+  coin: CoinType
+): Promise<string> => {
   return ExpoWalletCoreModule.getKeyForCoin(mnemonic, coin);
 };
 
-export const sign = (data: string, coin: CoinType): string => {
+export const sign = async (data: string, coin: CoinType): Promise<string> => {
   return ExpoWalletCoreModule.sign(data, coin);
 };
 

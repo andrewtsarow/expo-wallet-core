@@ -27,8 +27,8 @@ function WalletsListScreen() {
     setMnemonics([testMnemonic]);
   };
 
-  const create = () => {
-    const wallet = new Wallet();
+  const create = async () => {
+    const wallet = await Wallet.build();
     setMnemonics([...mnemonics, wallet.mnemonic!]);
   };
 
