@@ -16,7 +16,7 @@ PODS:
   - ExpoModulesCore (1.0.3):
     - React-Core
     - ReactCommon/turbomodule/core
-  - ExpoWalletCore (0.1.0):
+  - ExpoWalletCore (0.1.1):
     - ExpoModulesCore
     - TrustWalletCore (= 3.1.0)
   - FBLazyVector (0.70.5)

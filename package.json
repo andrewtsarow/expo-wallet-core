@@ -1,6 +1,6 @@
 {
   "name": "expo-wallet-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Provides access to cross-platform, cross-blockchain wallet library. This module wraps https://github.com/trustwallet/wallet-core.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
